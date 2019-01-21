@@ -1,0 +1,135 @@
+
+
+#include <iostream>
+
+
+using namespace std;
+class ops
+{
+public:
+	int i,sum=0,n,j,swap,cnt;
+	int tape[10], prg[10],mtape[10][10],t,sprg[10],b[20],sum1,rsum[10],k,sum2=0,p=0,l=1;
+	void accept();
+	void sort(int [],int []);
+    void TTR(int []);
+    void mat(int [],int t);
+};
+
+void ops :: accept()
+{
+	cout<<"enter no of the prg";
+	cin>>n;
+	cout<<"enter no of the tapes";
+	cin>>t;
+	cout<<"enter the program";
+	for(i=0;i<n;i++)
+	{
+		cin>>prg[i];
+	}
+}
+
+void ops ::sort(int prg[],int sprg[])
+{
+
+	for (i=0;i<n-1;i++)
+	{
+		for (j=0;j<n-i-1;j++)
+		{
+			if (prg[j]>prg[j+1])
+			{
+				swap=prg[j];
+				prg[j]=prg[j+1];
+				prg[j+1]=swap;
+			}
+		}
+	}
+	
+	cout<<"the sorted array is:-";
+	for(i=0;i<n;i++)
+	{
+		sprg[i]=prg[i];
+		cout<<"\t";
+		cout<<sprg[i];
+	}
+}
+
+void ops :: TTR(int [])
+{
+
+
+	for(i=0;i<n;i++)
+	{
+	sum=sum+prg[i];
+	sum1=sum1+sum;
+	b[i]=sum;
+    }
+
+	cout<<"\n\n Cumulative Addition array is:  ";
+    for(i=0; i<(n+1); i++)
+	{
+		cout<<b[i]<<"    ";
+	}
+
+
+}
+
+void ops::mat(int sprg[],int t)
+{
+    
+	sum=0,sum1=0; j=0,cnt=0;
+	cout<<"\n";
+	for(i=0;i<n;i++)
+	{
+		if(cnt==t)
+		{
+	        cnt=0;
+			j++;
+		}
+		
+		if(cnt<t)
+		{
+		
+			mtape[i%t][j]=sprg[i];
+			cout<<i%t <<"  "<<j <<"  "<<mtape[i%t][j]<<"\t";
+		    rsum[i]=mtape[i%t][j];
+			cnt=cnt+1;
+		    cout<<"\n";
+		}
+	
+	}
+	
+
+k=j;
+i=0;
+do{
+    if(l<t)
+        l++;
+
+    for(j=0;j<=k;j++)
+    {
+    	sum=mtape[i%t][j];
+	    sum1=sum1+sum;
+        sum2=sum2+sum1;
+    }  
+	
+    cout<<"\n\nRow wise Cumulative Addition is:"<<sum2;
+    p++;
+    i++;
+    sum=sum1=sum2=0;
+    if(l-1==cnt)
+        k--;
+    
+} while(p!=l);
+
+}
+
+int main()
+{
+    ops obj;
+    obj.accept();
+    obj.sort(obj.prg, obj.sprg);
+    //obj.TTR(obj.prg);
+    obj.mat(obj.sprg,obj.t);
+    return 0;
+}
+
